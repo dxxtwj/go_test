@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -16,5 +17,11 @@ func TestTriangle(t *testing.T) {
 		if actual := calcTringle(tt.a, tt.b); actual != tt.c {
 			t.Errorf("calcTringle(%d, %d);" + "got %d; expected %d", tt.a, tt.b, actual, tt.c)
 		}
+	}
+}
+
+func main() {
+	for i:= 0 ; i > 100 ; i++ {
+		fmt.Println(1)
 	}
 }
