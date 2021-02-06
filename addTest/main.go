@@ -1,20 +1,29 @@
 package main
 
 import (
+	"gomoutest/pkg/mod/github.com/pkg/errors@v0.8.1"
 	"testing"
 )
-
-func TestTriangle(t *testing.T) {
-	tests := []struct {a, b, c int} {
-		{3,4,5},
-		{5,12,13},
-		{8,15,17},
-		{12,35,37},
-		{30000,40000,50000},
+func Benchmark_Division(b *testing.B) {
+	for i := 0; i < b.N; i++ { //use b.N for looping
+		Division(4, 5)
 	}
-	for _, tt := range tests {
-		if actual := calcTringle(tt.a, tt.b); actual != tt.c {
-			t.Errorf("calcTringle(%d, %d);" + "got %d; expected %d", tt.a, tt.b, actual, tt.c)
-		}
+}
+func Division(a, b float64) (float64, error) {
+	if b == 0 {
+		return 0, errors.New("除数不能为0")
+	}
+
+	return a / b, nil
+}
+func Benchmark_TimeConsumingFunction(b *testing.B) {
+	b.StopTimer() //调用该函数停止压力测试的时间计数
+
+	//做一些初始化的工作,例如读取文件数据,数据库连接之类的,
+	//这样这些时间不影响我们测试函数本身的性能
+
+	b.StartTimer() //重新开始时间
+	for i := 0; i < b.N; i++ {
+		Division(4, 5)
 	}
 }
