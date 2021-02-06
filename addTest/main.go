@@ -2,6 +2,7 @@ package main
 
 import (
 	"gomoutest/pkg/mod/github.com/pkg/errors@v0.8.1"
+	"fmt"
 	"testing"
 )
 func Benchmark_Division(b *testing.B) {
@@ -25,5 +26,11 @@ func Benchmark_TimeConsumingFunction(b *testing.B) {
 	b.StartTimer() //重新开始时间
 	for i := 0; i < b.N; i++ {
 		Division(4, 5)
+	}
+}
+
+func main() {
+	for i:= 0 ; i > 100 ; i++ {
+		fmt.Println(1)
 	}
 }
