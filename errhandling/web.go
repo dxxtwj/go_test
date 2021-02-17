@@ -2,12 +2,15 @@ package main
 
 import (
 	"fmt"
+	har "goTest/errhandling/fileList"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"reflect"
-	har "twj_go/errhandling/fileList"
 )
+
+
 type appHandler func(writer http.ResponseWriter, request *http.Request) error
 func errWrapper (handler appHandler) func(http.ResponseWriter, *http.Request) {
 	return func(writer http.ResponseWriter, request *http.Request) {
@@ -54,8 +57,8 @@ type userError interface {
  */
 func main() {
 	http.HandleFunc("/", errWrapper(har.HandlerFileList))
-	err := http.ListenAndServe(":2223", nil)
+	err := http.ListenAndServe(":8888", nil)
 	if err != nil {
-		//panic(err)
+		panic(err)
 	}
 }
