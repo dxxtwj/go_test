@@ -18,7 +18,7 @@ func ParseCity(contents []byte) engine.PaseResult {
 	result := engine.PaseResult{}
 	for _, m := range matches { // 把每一頁的用戶數據全部追加返回，目的是在engine.go中把所有都遍歷出來
 		name := string(m[2])
-		result.Items = append(result.Items, "User "+name)
+		//result.Items = append(result.Items, "User "+name)
 		result.Requests = append(result.Requests, engine.Request{
 			Url: string(m[1]),
 			ParseFunc: func(c []byte) engine.PaseResult {

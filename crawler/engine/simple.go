@@ -11,7 +11,7 @@ type SimpleEngine struct {
 
 // 種子頁面，起始頁
 func (e SimpleEngine) Run(seeds ...Request) {
-	log.Println(1)
+	//log.Println(1)
 	var requests []Request
 	for _, r := range seeds {
 		requests = append(requests, r)
@@ -32,7 +32,7 @@ func (e SimpleEngine) Run(seeds ...Request) {
 }
 
 func worker(r Request) (PaseResult, error) {
-	log.Printf("fetching %s", r.Url)
+	//log.Printf("fetching %s", r.Url)
 	body, err := fetcher.Fetch(r.Url)
 	if err != nil {
 		log.Printf("fetch:error"+"fetching url %s: %v", r.Url, err)

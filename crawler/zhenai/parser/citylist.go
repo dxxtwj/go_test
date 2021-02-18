@@ -14,7 +14,7 @@ func ParsetCityList(contents []byte) engine.PaseResult {
 	matches := re.FindAllSubmatch(contents, -1)
 	result := engine.PaseResult{}
 	for _, m := range matches {// 打開城市中每一頁的用戶數據
-		result.Items = append(result.Items, "City "+string(m[2]))
+		//result.Items = append(result.Items, "City "+string(m[2]))
 		result.Requests = append(result.Requests, engine.Request{
 			Url:       string(m[1]),
 			ParseFunc: ParseCity,
