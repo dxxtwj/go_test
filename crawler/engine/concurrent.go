@@ -10,17 +10,23 @@ type ConcurrentEngine struct {
 }
 
 type Scheduler interface {
+	ReadyNotifier
 	Submit(Request)
-	ConfigureMasterWorkerChan(chan Request)
+	WorkerChan() chan Request // 我有一个worker，请问给我哪一个chan?
+	Run()
+}
+type ReadyNotifier interface {
+	WorkerReady(w chan Request)
+
 }
 
 func (e *ConcurrentEngine) Run(seeds ...Request) {
 
-	in := make(chan Request)// 开始的东西，URL请求
 	out := make(chan PaseResult)// 接收返回的东西
-	e.Scheduler.ConfigureMasterWorkerChan(in)
+	e.Scheduler.Run()
 	for i := 0; i < e.WorkerCount; i++ {
-		createWorker(in, out)// fetch回来后，把返回来的url创建worker，并且把有价值的数据放out等等遍历
+		// 问e.Scheduler.WorkerChan()要一个chan
+		createWorker(e.Scheduler.WorkerChan(), out, e.Scheduler)// fetch回来后，把返回来的url创建worker，并且把有价值的数据放out等等遍历
 	}
 	for _, r := range seeds {
 		e.Scheduler.Submit(r)
@@ -38,15 +44,17 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 	}
 }
 
-func createWorker(in chan Request, out chan PaseResult) {
+func createWorker(in chan Request, out chan PaseResult, ready ReadyNotifier) {
 	go func() {
 		for {
+			// tell scheduler i'm ready
+			ready.WorkerReady(in)
 			request := <-in
-			result, err := worker(request)
+			result, err := worker(request)// 做事情
 			if err != nil {
 				continue
 			}
-			out <- result
+			out <- result// 做完事情要输出了
 		}
 	}()
 }
