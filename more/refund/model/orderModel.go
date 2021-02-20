@@ -1,11 +1,14 @@
 package model
 
-import "fmt"
-
 type Morders struct {
-
+	Model
+	UserId      string `json:"user_id"`
+	TransferNo      string `json:"transfer_no"`
+	IsRefund      string `json:"is_refund"`
+	UpdatedAt string `json:"updated_at"`
 }
 
-func Update() {
-	fmt.Println(123123)
+// 修改数据
+func EditMorders () {
+
 }

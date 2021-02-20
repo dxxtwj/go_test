@@ -1,7 +1,7 @@
 package main
 
-import "goTest/more/refund/model"
+import "refund/model"
 
 func main() {
-model.Update()
+	model.Update()
 }
