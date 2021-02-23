@@ -1,7 +1,9 @@
 package main
 
-import "refund/model"
+import (
+	"refund/service/order"
+)
 
 func main() {
-	model.Update()
+	order.RefundOrder()
 }
